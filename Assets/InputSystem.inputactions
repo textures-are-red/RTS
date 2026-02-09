@@ -25,15 +25,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Choice",
-                    "type": "Button",
-                    "id": "904988a0-7307-472c-aee9-0c56aec41c47",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "MouseMoveEnable",
                     "type": "Button",
                     "id": "cd907431-6556-4510-ac8b-9ad4b5f3ed9a",
@@ -41,6 +32,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MouseRotateEnable",
+                    "type": "Button",
+                    "id": "c4509455-f8f5-4d95-be91-9731a7f6aeec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Height",
+                    "type": "Value",
+                    "id": "2cada05f-ff4a-4cfa-b2be-42af1e8bb86b",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate",
+                    "type": "Value",
+                    "id": "2e81c6d9-3aaa-4c61-9ab0-43c8f39009e1",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MouseRotate",
+                    "type": "Value",
+                    "id": "6a83b6b0-1426-40fe-968f-1e101a9d8c5b",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -167,25 +194,168 @@
                 },
                 {
                     "name": "",
-                    "id": "dfd1662f-0957-4118-af26-084e3ab469b3",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Choice",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "04fba62b-50f7-43a7-9736-e354d3282af0",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Hold(duration=0.4)",
+                    "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "MouseMoveEnable",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e500ba6-4ad2-4448-916f-cd844da31dc2",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "MouseRotateEnable",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Mouse Wheel",
+                    "id": "2ae5a7d1-8c98-4303-8935-89ecab7ae9f5",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Height",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Positive",
+                    "id": "98bde46c-0a20-4b14-acd6-5a09a2534d9d",
+                    "path": "<Mouse>/scroll/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Height",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Negative",
+                    "id": "0252cb00-9ed3-41fd-85c9-edd54778b221",
+                    "path": "<Mouse>/scroll/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Height",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Gamepad analog buttons",
+                    "id": "53adb0a4-d67c-4293-a64e-ad9677f13370",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Height",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "84687828-3d92-4696-b84c-1bfd4311a23b",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Height",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "e8b5a7ec-58cd-48c3-8ada-2079004e2bbe",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Height",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "538363c3-b5fd-40d3-9257-c36e3602ebed",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "Invert",
+                    "groups": ";Gamepad",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "e981d358-7fe4-4468-a2fa-1470144fedd3",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Positive",
+                    "id": "83037d74-0943-4fae-b55b-5c1889cd0fa5",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Negative",
+                    "id": "50df90fc-88c1-4726-a760-66e4d43e0522",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Mouse",
+                    "id": "92997cdf-d280-4f16-83e8-073ae4fd3132",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseRotate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "d34b509d-cbe0-42fc-8477-72e214d1e2b2",
+                    "path": "<Mouse>/delta/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "MouseRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "63ee4b37-93f1-47bc-85fd-6ca0a2a7f543",
+                    "path": "<Mouse>/delta/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "MouseRotate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
