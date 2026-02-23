@@ -43,15 +43,15 @@ public class RotationController : MonoBehaviour
     private float _smoothedMouseRotationInput;
     private float _currentMouseRotationVelocity;
 
-    public void Initialize(InputSystem input)
+    public void Awake()
     {
         _mouseRotationEnabler = GetComponent<MouseRotationEnabler>();
-        _mouseRotationEnabler.Initialize(input);
+        //_mouseRotationEnabler.Initialize();
 
         _cameraMain = Camera.main;
         _cameraTransform = _cameraMain.transform;
 
-        _input = input;
+        _input = InputSystemHolder.Instance;
     }
 
     private void Update()

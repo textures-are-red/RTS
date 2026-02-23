@@ -27,7 +27,6 @@ public class GamepadOnNodeCenterer : MonoBehaviour
     {
         if (Mathf.Approximately(_cameraMainTransform.forward.y, 0f)) return Vector3.zero;
 
-        //Node nodeToCenter = FindNearestNodePosition();
         if (nodeToCenter is null) return Vector3.zero;
 
         Vector3 nodeToCenterPosition = nodeToCenter.transform.position;
@@ -39,10 +38,9 @@ public class GamepadOnNodeCenterer : MonoBehaviour
         Vector3 targetDelta = target - flatPosition;
 
         return Vector3.MoveTowards(Vector3.zero, targetDelta, Time.deltaTime * _centerSpeed);
-        //return Vector3.MoveTowards(flatPosition, target, Time.deltaTime * _centerSpeed);
     }
 
-    public Node FindNearestNodePosition()
+    public Node FindNearestNode(float radiusMultiplier = 1f)
     {
         Ray fromCameraCenter = _cameraMain.ViewportPointToRay(_cameraCenter);
         RaycastHit raycastHit;
@@ -50,20 +48,24 @@ public class GamepadOnNodeCenterer : MonoBehaviour
         if (Physics.Raycast(fromCameraCenter, out raycastHit, _castRange, _fieldMask, QueryTriggerInteraction.Ignore) is false) return null;
         Vector3 hitPoint = raycastHit.point;
 
-        var hits = Physics.SphereCastAll(fromCameraCenter, _radius, _castRange, _nodeMask, QueryTriggerInteraction.Ignore);
+        var hits = Physics.SphereCastAll(fromCameraCenter, _radius * radiusMultiplier, _castRange, _nodeMask, QueryTriggerInteraction.Ignore);
         if (hits.Length is 0) return null;
 
+        Vector3 rayOrigin = fromCameraCenter.origin;
+        Vector3 rayDirection = Camera.main.transform.forward;
+
         GameObject nearestNodeGameObject = null;
-        float nearestNodeDistance = float.PositiveInfinity;
+        float nearestNodeDistanceSqr = float.PositiveInfinity;
 
         foreach(var hit in hits)
         {
-            float currentDistance = Vector3.Distance(hitPoint, hit.transform.position);
+            Vector3 toObject = hit.transform.position - rayOrigin;
+            float currentDistance = Vector3.Cross(toObject, rayDirection).sqrMagnitude;
 
-            if (nearestNodeGameObject is null || currentDistance < nearestNodeDistance)
+            if (nearestNodeGameObject is null || currentDistance < nearestNodeDistanceSqr)
             {
                 nearestNodeGameObject = hit.collider.gameObject;
-                nearestNodeDistance = currentDistance;
+                nearestNodeDistanceSqr = currentDistance;
             }
         }
 

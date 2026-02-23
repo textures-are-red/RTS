@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,8 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(MouseMoveEnable))]
 public class CameraController : MonoBehaviour
 {
+    public bool _enableCenter = false;
     [SerializeField] private FastActionsPositioner _fastActionPositioner;
-    [SerializeField] private bool _enableCenter = false;
 
     [Space(15)]
 
@@ -15,6 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector2 _clampReferenceMouseHeight;
     [SerializeField] private float _referenceDefaultHeight = 30f;
     [SerializeField] private Vector2 _clampReferenceDefaultHeight;
+    [SerializeField] private float _referenceNodeSearchRadius = 20f;
+    [SerializeField] private Vector2 _clampReferenceNodeSearchRadius;
 
     [Header("Mouse")]
     [SerializeField] private float _mouseSpeed = 2f;
@@ -43,18 +46,22 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _gamepadHeightSmoothTime = 0.1f;
     [SerializeField] private float _gamepadHeightMaxSpeed = 50f;
 
+    public event Action DefaultDeviceChanged;
+    public Node NodeToCenter { get; private set; }
+
     private float _mouseSpeedMultiplier => Mathf.Clamp(_cameraTransform.position.y / _referenceMouseHeight, _clampReferenceMouseHeight.x, _clampReferenceMouseHeight.y);
     private float _defaultSpeedMultiplier => Mathf.Clamp(_cameraTransform.position.y / _referenceDefaultHeight, _clampReferenceDefaultHeight.x, _clampReferenceDefaultHeight.y);
+    private float _nodeSearchRadiusMultiplier => Mathf.Clamp(_cameraTransform.position.y / _referenceNodeSearchRadius, _clampReferenceNodeSearchRadius.x, _clampReferenceNodeSearchRadius.y);
 
     private InputSystem _input;
     private InputDevice _currentDefaultDevice;
+    private InputDevice _lastDefaultDevice;
     private InputDevice _currentHeightDevice;
+
     private Transform _cameraTransform;
 
     private MouseMoveEnable _mouseMoveEnabler;
-    private RotationController _rotationController;
     private GamepadOnNodeCenterer _gamepadOnNodeCenterer;
-    private Node _nodeToCenter;
 
     private Coroutine _mouseMoveCoroutine;
     private Coroutine _defaultMoveCoroutine;
@@ -72,52 +79,51 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-        _input = new();
-        _input.Enable();
-
+        _input = InputSystemHolder.Instance;
         _cameraTransform = Camera.main.transform;
 
         _mouseMoveEnabler = GetComponent<MouseMoveEnable>();
-        _mouseMoveEnabler.Initialize(_input);
-
-        _rotationController = GetComponent<RotationController>();
-        _rotationController.Initialize(_input);
-
         _gamepadOnNodeCenterer = GetComponent<GamepadOnNodeCenterer>();
     }
 
     private void Update()
     {
-        if (_currentDefaultDevice is Gamepad && _mouseInput == Vector2.zero)
-            _nodeToCenter = _gamepadOnNodeCenterer.FindNearestNodePosition();
+        if (_currentDefaultDevice is Gamepad && _mouseInput == Vector2.zero && _mouseMoveEnabler.ClickedNode is null)
+            NodeToCenter = _gamepadOnNodeCenterer.FindNearestNode(Mathf.Max(_nodeSearchRadiusMultiplier, 1f));
+        else
+        {
+            NodeToCenter = null;
+            
+            if (_currentDefaultDevice is Gamepad)
+                _currentDefaultDevice = null;
+        }
 
         Move();
 
-        CheckForClosestNodeGamepad();
+        if (_currentDefaultDevice is Gamepad)
+            CheckForClosestNodeGamepad();
     }
 
     private void Move()
     {
         if (_enableCenter && _defaultInput == Vector2.zero && _currentDefaultDevice is Gamepad && _mouseInput == Vector2.zero)
-            _moveVector = _gamepadOnNodeCenterer.CenterCameraOnNode(_nodeToCenter) + ApplyHeight();
+            _moveVector = _gamepadOnNodeCenterer.CenterCameraOnNode(NodeToCenter) + ApplyHeight();
         else
             _moveVector = CalculateFlatMoveVector() + ApplyHeight();
 
-        _cameraTransform.position +=_moveVector;
+        _cameraTransform.position += _moveVector;
     }
 
     private void CheckForClosestNodeGamepad()
     {
-        if (_currentDefaultDevice is not Gamepad) return;
-
-        if (_nodeToCenter is not null && _fastActionPositioner.ButtonsAreShown is false)
-                _fastActionPositioner.ShowButtons(_nodeToCenter.transform);
-        else if (_nodeToCenter is not null && _fastActionPositioner.ButtonsAreShown && _nodeToCenter.transform != _fastActionPositioner.CurrentNodeTransform)
+        if (NodeToCenter is not null && _fastActionPositioner.ButtonsAreShown is false)
+            _fastActionPositioner.ShowButtons(NodeToCenter.transform);
+        else if (NodeToCenter is not null && _fastActionPositioner.ButtonsAreShown && NodeToCenter.transform != _fastActionPositioner.CurrentNodeTransform)
         {
             _fastActionPositioner.ForceHide();
-            _fastActionPositioner.ShowButtons(_nodeToCenter.transform);
+            _fastActionPositioner.ShowButtons(NodeToCenter.transform);
         }
-        else if (_nodeToCenter is null && _fastActionPositioner.ButtonsAreShown || _nodeToCenter is null)
+        else if (NodeToCenter is null && _fastActionPositioner.ButtonsAreShown || NodeToCenter is null)
             _fastActionPositioner.HideButtons();
     }
 
@@ -174,7 +180,11 @@ public class CameraController : MonoBehaviour
         while (true)
         {
             _defaultInput = ctx.ReadValue<Vector2>();
+            _lastDefaultDevice = _currentDefaultDevice;
             _currentDefaultDevice = ctx.control.device;
+
+            if (_lastDefaultDevice != _currentDefaultDevice) DefaultDeviceChanged?.Invoke();
+
             yield return null;
         }
     }
@@ -212,6 +222,8 @@ public class CameraController : MonoBehaviour
 
         _input.Default.Height.performed += OnHeightPerformed;
         _input.Default.Height.canceled += OnHeightCanceled;
+
+        DefaultDeviceChanged += _mouseMoveEnabler.ClearClickedNode;
     }
 
     private void OnDisable()
@@ -226,5 +238,7 @@ public class CameraController : MonoBehaviour
 
         _input.Default.Height.performed -= OnHeightPerformed;
         _input.Default.Height.canceled -= OnHeightCanceled;
+
+        DefaultDeviceChanged -= _mouseMoveEnabler.ClearClickedNode;
     }
 }

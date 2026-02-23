@@ -23,14 +23,16 @@ public class MouseMoveEnable : MonoBehaviour
     private Coroutine _mouseMoveEnableCoroutine;
     private float _elapsedFromMoveEnableStarted;
 
-    public void Initialize(InputSystem input)
+    private void Awake()
     {
-        _input = input;
+        _input = InputSystemHolder.Instance;
         _mainCamera = Camera.main;
 
         _input.Default.MouseMoveEnable.performed += OnMouseEnablePerformed;
         _input.Default.MouseMoveEnable.canceled += OnMouseEnableCanceled;
     }
+
+    public void ClearClickedNode() => ClickedNode = null;
 
     private void OnMouseEnablePerformed(InputAction.CallbackContext ctx) => _mouseMoveEnableCoroutine ??= StartCoroutine(WaitForEnable());
 

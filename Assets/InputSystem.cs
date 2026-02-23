@@ -154,6 +154,78 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleInventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5ae970a-bae4-43cf-b286-2593291c231d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Digit"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b3cc422-9a2a-4e00-ae46-ec1a94823177"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UnitSwitch"",
+                    ""type"": ""Value"",
+                    ""id"": ""14a12c6c-9c59-47ae-a9b3-7e3f4d78d4fd"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Button"",
+                    ""id"": ""489c0243-0a07-4d58-ac3f-a579c12632d1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""UpgradeNode"",
+                    ""type"": ""Button"",
+                    ""id"": ""6439775f-9722-4325-94af-6eff50a7bdf7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DowngradeNode"",
+                    ""type"": ""Button"",
+                    ""id"": ""9a3f4d0a-babf-4167-a551-8932916ddc27"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb4c3e9b-6c77-4c92-9db9-2c8a06bbf870"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FastActions"",
+                    ""type"": ""Value"",
+                    ""id"": ""4dd4353b-b3b0-4441-af8a-02135459ec76"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -440,6 +512,270 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""MouseRotate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a373187b-7a3b-4d56-b865-f897599e20e6"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83f90b5c-105f-401d-91af-55046c48f553"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ToggleInventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d1aca567-82e8-4da9-b06f-8c9ce4bed6dc"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d1ea65b0-0dbf-4330-9dde-b876b6c8a130"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34a27ed9-5c09-4855-9dde-ec66a3ed57be"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ec5cfed-0dc2-48ad-81a7-e7d82feb5a71"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""46fc2c9b-a29e-413e-a2a3-dba1d555cc75"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""412c754f-6b12-4d3b-80d2-bb6daf9aecb6"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f924d724-0073-4b20-b712-234520b6c6d4"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1774eb3d-6085-48c4-adb7-b26f56c9bcb1"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45176085-40dc-4517-a7f8-bba4fe02349b"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""088d97c6-4cd7-4a03-8a4a-b7bde429edee"",
+                    ""path"": ""<Keyboard>/0"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Digit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Shoulders"",
+                    ""id"": ""3b3e45ae-27f1-4043-a7ce-fc530bb9e58f"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UnitSwitch"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d3094c97-11e6-408f-9658-e86261742235"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""UnitSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""eee1cb30-6852-47d5-8b6c-f5af65cf281e"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""UnitSwitch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""27fabc18-16b4-47d2-b601-7a2abebea600"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f60351c-8b4b-4b6c-8c65-a5f14b045dcf"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""UpgradeNode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3495af18-54b6-4d3a-b247-f532239abc26"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""DowngradeNode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0621e104-d92c-41ff-b39c-6822479dd029"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7857b9d7-307c-44a1-ab03-9c3daf6c6958"",
+                    ""path"": ""2DVector(mode=1)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FastActions"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1027a553-fe4b-4971-bcd2-64a50cdaf04f"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""FastActions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""d046bf5c-333c-4982-9169-68ddb5171e6d"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""FastActions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d8e66611-5b23-4d8f-a910-9e3c9eea4108"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""FastActions"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e16a106a-f49d-4494-bfa5-948d92b27118"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""FastActions"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -1034,6 +1370,14 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         m_Default_Height = m_Default.FindAction("Height", throwIfNotFound: true);
         m_Default_Rotate = m_Default.FindAction("Rotate", throwIfNotFound: true);
         m_Default_MouseRotate = m_Default.FindAction("MouseRotate", throwIfNotFound: true);
+        m_Default_ToggleInventory = m_Default.FindAction("ToggleInventory", throwIfNotFound: true);
+        m_Default_Digit = m_Default.FindAction("Digit", throwIfNotFound: true);
+        m_Default_UnitSwitch = m_Default.FindAction("UnitSwitch", throwIfNotFound: true);
+        m_Default_Move = m_Default.FindAction("Move", throwIfNotFound: true);
+        m_Default_UpgradeNode = m_Default.FindAction("UpgradeNode", throwIfNotFound: true);
+        m_Default_DowngradeNode = m_Default.FindAction("DowngradeNode", throwIfNotFound: true);
+        m_Default_Interact = m_Default.FindAction("Interact", throwIfNotFound: true);
+        m_Default_FastActions = m_Default.FindAction("FastActions", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1134,6 +1478,14 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Default_Height;
     private readonly InputAction m_Default_Rotate;
     private readonly InputAction m_Default_MouseRotate;
+    private readonly InputAction m_Default_ToggleInventory;
+    private readonly InputAction m_Default_Digit;
+    private readonly InputAction m_Default_UnitSwitch;
+    private readonly InputAction m_Default_Move;
+    private readonly InputAction m_Default_UpgradeNode;
+    private readonly InputAction m_Default_DowngradeNode;
+    private readonly InputAction m_Default_Interact;
+    private readonly InputAction m_Default_FastActions;
     /// <summary>
     /// Provides access to input actions defined in input action map "Default".
     /// </summary>
@@ -1173,6 +1525,38 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Default/MouseRotate".
         /// </summary>
         public InputAction @MouseRotate => m_Wrapper.m_Default_MouseRotate;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/ToggleInventory".
+        /// </summary>
+        public InputAction @ToggleInventory => m_Wrapper.m_Default_ToggleInventory;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/Digit".
+        /// </summary>
+        public InputAction @Digit => m_Wrapper.m_Default_Digit;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/UnitSwitch".
+        /// </summary>
+        public InputAction @UnitSwitch => m_Wrapper.m_Default_UnitSwitch;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/Move".
+        /// </summary>
+        public InputAction @Move => m_Wrapper.m_Default_Move;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/UpgradeNode".
+        /// </summary>
+        public InputAction @UpgradeNode => m_Wrapper.m_Default_UpgradeNode;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/DowngradeNode".
+        /// </summary>
+        public InputAction @DowngradeNode => m_Wrapper.m_Default_DowngradeNode;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/Interact".
+        /// </summary>
+        public InputAction @Interact => m_Wrapper.m_Default_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Default/FastActions".
+        /// </summary>
+        public InputAction @FastActions => m_Wrapper.m_Default_FastActions;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1220,6 +1604,30 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @MouseRotate.started += instance.OnMouseRotate;
             @MouseRotate.performed += instance.OnMouseRotate;
             @MouseRotate.canceled += instance.OnMouseRotate;
+            @ToggleInventory.started += instance.OnToggleInventory;
+            @ToggleInventory.performed += instance.OnToggleInventory;
+            @ToggleInventory.canceled += instance.OnToggleInventory;
+            @Digit.started += instance.OnDigit;
+            @Digit.performed += instance.OnDigit;
+            @Digit.canceled += instance.OnDigit;
+            @UnitSwitch.started += instance.OnUnitSwitch;
+            @UnitSwitch.performed += instance.OnUnitSwitch;
+            @UnitSwitch.canceled += instance.OnUnitSwitch;
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @UpgradeNode.started += instance.OnUpgradeNode;
+            @UpgradeNode.performed += instance.OnUpgradeNode;
+            @UpgradeNode.canceled += instance.OnUpgradeNode;
+            @DowngradeNode.started += instance.OnDowngradeNode;
+            @DowngradeNode.performed += instance.OnDowngradeNode;
+            @DowngradeNode.canceled += instance.OnDowngradeNode;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @FastActions.started += instance.OnFastActions;
+            @FastActions.performed += instance.OnFastActions;
+            @FastActions.canceled += instance.OnFastActions;
         }
 
         /// <summary>
@@ -1252,6 +1660,30 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
             @MouseRotate.started -= instance.OnMouseRotate;
             @MouseRotate.performed -= instance.OnMouseRotate;
             @MouseRotate.canceled -= instance.OnMouseRotate;
+            @ToggleInventory.started -= instance.OnToggleInventory;
+            @ToggleInventory.performed -= instance.OnToggleInventory;
+            @ToggleInventory.canceled -= instance.OnToggleInventory;
+            @Digit.started -= instance.OnDigit;
+            @Digit.performed -= instance.OnDigit;
+            @Digit.canceled -= instance.OnDigit;
+            @UnitSwitch.started -= instance.OnUnitSwitch;
+            @UnitSwitch.performed -= instance.OnUnitSwitch;
+            @UnitSwitch.canceled -= instance.OnUnitSwitch;
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @UpgradeNode.started -= instance.OnUpgradeNode;
+            @UpgradeNode.performed -= instance.OnUpgradeNode;
+            @UpgradeNode.canceled -= instance.OnUpgradeNode;
+            @DowngradeNode.started -= instance.OnDowngradeNode;
+            @DowngradeNode.performed -= instance.OnDowngradeNode;
+            @DowngradeNode.canceled -= instance.OnDowngradeNode;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @FastActions.started -= instance.OnFastActions;
+            @FastActions.performed -= instance.OnFastActions;
+            @FastActions.canceled -= instance.OnFastActions;
         }
 
         /// <summary>
@@ -1601,6 +2033,62 @@ public partial class @InputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseRotate(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ToggleInventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnToggleInventory(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Digit" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDigit(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "UnitSwitch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUnitSwitch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "UpgradeNode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnUpgradeNode(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "DowngradeNode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDowngradeNode(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "FastActions" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFastActions(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

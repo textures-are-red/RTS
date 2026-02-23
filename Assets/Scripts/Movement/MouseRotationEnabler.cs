@@ -18,9 +18,9 @@ public class MouseRotationEnabler : MonoBehaviour
     private Coroutine _mouseRotateEnableCoroutine;
     private float _elapsedFromRotateEnableStarted;
 
-    public void Initialize(InputSystem input)
+    public void Awake()
     {
-        _input = input;
+        _input = InputSystemHolder.Instance;
         _mainCamera = Camera.main;
 
         _input.Default.MouseRotateEnable.performed += OnMouseEnablePerformed;
@@ -39,6 +39,7 @@ public class MouseRotationEnabler : MonoBehaviour
 
         CanMouseRotate = true;
         _mouseRotateEnableCoroutine = null;
+        
         Enable?.Invoke();
     }
 

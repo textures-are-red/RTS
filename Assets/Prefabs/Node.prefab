@@ -122,8 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be1e2e7d90f6154694f14383ddedcff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _edgePrefab: {fileID: -1301843667828634853, guid: 35bcc2e199b60f741b0d0d4746d7ed73, type: 3}
-  _edgeIndent: 0.75
+  _edgePrefab: {fileID: 8583955301648711664, guid: 0c1db907e34767d40a43c1edfc029e6b, type: 3}
+  _levelIndicatorPrefab: {fileID: 6212155977514028768, guid: 8ece8e4275b504748929ed3d01b6c67d, type: 3}
+  _levelIndicatorMargin: {x: 0, y: 0, z: 1.5}
+  _level: 1
+  _multipleUnitsLocatedColor: {r: 1, g: 1, b: 0.20392157, a: 0}
   _neighbors: []
   _onClick:
     m_PersistentCalls:

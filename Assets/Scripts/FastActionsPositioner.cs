@@ -19,23 +19,24 @@ public class FastActionsPositioner : MonoBehaviour
     [SerializeField] private float _distanceFromCenterWhenHidden = 45f;
     [SerializeField] private Vector2 _buttonsSize;
     [SerializeField] private float _distanceFromScreenBounds;
+    [SerializeField] private Vector2 _margin;
 
     [Space(15)]
 
-    [SerializeField] private RectTransform _upButtonTransform;
-    [SerializeField] private RectTransform _downButtonTransform;
-    [SerializeField] private RectTransform _rightButtonTransform;
-    [SerializeField] private RectTransform _leftButtonTransform;
+    [SerializeField] private Button _upButton;
+    [SerializeField] private Button _downButton;
+    [SerializeField] private Button _rightButton;
+    [SerializeField] private Button _leftButton;
+
+    private RectTransform _upButtonTransform;
+    private RectTransform _downButtonTransform;
+    private RectTransform _rightButtonTransform;
+    private RectTransform _leftButtonTransform;
 
     public bool ButtonsAreShown { get; private set; }
     public Transform CurrentNodeTransform => _nodeTransform;
 
     private Camera _mainCamera;
-
-    /*private Button _upButton;
-    private Button _downButton;
-    private Button _rightButton;
-    private Button _leftButton;*/
 
     private Transform _nodeTransform;
     private Coroutine _showTransition;
@@ -47,19 +48,23 @@ public class FastActionsPositioner : MonoBehaviour
     {
         _mainCamera = Camera.main;
 
-        /*_upButton = _upButtonTransform.gameObject.GetComponent<Button>();
-        _downButton = _downButtonTransform.gameObject.GetComponent<Button>();
-        _rightButton = _rightButtonTransform.gameObject.GetComponent<Button>();
-        _leftButton = _leftButtonTransform.gameObject.GetComponent<Button>();*/
+        _upButtonTransform = _upButton.transform as RectTransform;
+        _downButtonTransform = _downButton.transform as RectTransform;
+        _rightButtonTransform = _rightButton.transform as RectTransform;
+        _leftButtonTransform = _leftButton.transform as RectTransform;
 
         ForceHide();
     }
 
     public void ShowButtons(Transform nodeTransform)
     {
-        if (ButtonsAreShown) ForceHide();
+        if (ButtonsAreShown && _nodeTransform == nodeTransform || IsObjectOutOfScreen(nodeTransform))
+        {
+            HideButtons();
+            return;
+        }
 
-        //ChangeButtonComponentState(false);
+        if (ButtonsAreShown) ForceHide();
 
         _nodeTransform = nodeTransform;
         _showTransition ??= StartCoroutine(ShowTransition());
@@ -77,9 +82,9 @@ public class FastActionsPositioner : MonoBehaviour
             _showTransition = null;
         }
 
-        _hideTransition ??= StartCoroutine(HideTransition());
+        SetButtonsState(false);
 
-        //ChangeButtonComponentState(false);
+        _hideTransition ??= StartCoroutine(HideTransition());
     }
 
     public void ForceHide()
@@ -106,7 +111,7 @@ public class FastActionsPositioner : MonoBehaviour
         _canvasGroup.alpha = 0f;
         _nodeTransform = null;
 
-        //ChangeButtonComponentState(false);
+        SetButtonsState(false);
     }
 
     private IEnumerator UpdateButtonsPosition()
@@ -125,12 +130,24 @@ public class FastActionsPositioner : MonoBehaviour
 
         while (_canvasGroup.alpha > 0f && _nodeTransform is not null)
         {
-            Vector2 center = CorrectCenterPosition(GetCanvasPositionForObject(_nodeTransform));
+            Vector2 center = GetCanvasPositionForObject(_nodeTransform);
 
-            Vector2 targetUpPosition = center + Vector2.up * _distanceFromCenterWhenShown;
-            Vector2 targetDownPosition = center + Vector2.down * _distanceFromCenterWhenShown;
-            Vector2 targetRightPosition = center + Vector2.right * _distanceFromCenterWhenShown;
-            Vector2 targetLeftPosition = center + Vector2.left * _distanceFromCenterWhenShown;
+            if (IsObjectOutOfScreen(_nodeTransform))
+            {
+                _updateButtonsPosition = null;
+                _nodeTransform = null;
+
+                HideButtons();
+
+                yield break;
+            }
+
+            Vector2 correctedCenter = CorrectCenterPosition(center);
+
+            Vector2 targetUpPosition = correctedCenter + Vector2.up * _distanceFromCenterWhenShown;
+            Vector2 targetDownPosition = correctedCenter + Vector2.down * _distanceFromCenterWhenShown;
+            Vector2 targetRightPosition = correctedCenter + Vector2.right * _distanceFromCenterWhenShown;
+            Vector2 targetLeftPosition = correctedCenter + Vector2.left * _distanceFromCenterWhenShown;
             
             float currentDistance = needToMove ? Mathf.Lerp(_distanceFromCenterWhenHidden, _distanceFromCenterWhenShown, Mathf.Clamp01(elapsed / _whenShowingMovementTime)) :
                 _distanceFromCenterWhenShown;
@@ -139,12 +156,13 @@ public class FastActionsPositioner : MonoBehaviour
             {
                 needToMove = false;
                 currentDistance = _distanceFromCenterWhenShown;
+                SetButtonsState(true);
             }
 
-            _upButtonTransform.anchoredPosition = center + Vector2.up * currentDistance;
-            _downButtonTransform.anchoredPosition = center + Vector2.down * currentDistance;
-            _rightButtonTransform.anchoredPosition = center + Vector2.right * currentDistance;
-            _leftButtonTransform.anchoredPosition = center + Vector2.left * currentDistance;
+            _upButtonTransform.anchoredPosition = correctedCenter + Vector2.up * currentDistance;
+            _downButtonTransform.anchoredPosition = correctedCenter + Vector2.down * currentDistance;
+            _rightButtonTransform.anchoredPosition = correctedCenter + Vector2.right * currentDistance;
+            _leftButtonTransform.anchoredPosition = correctedCenter + Vector2.left * currentDistance;
 
             elapsed += Time.deltaTime;
             yield return null;
@@ -152,17 +170,30 @@ public class FastActionsPositioner : MonoBehaviour
 
         _updateButtonsPosition = null;
         _nodeTransform = null;
-
-        //ChangeButtonComponentState(true);
     }
 
-    private Vector2 CorrectCenterPosition(Vector2 center)
+    private bool IsObjectOutOfScreen(Transform transform)
+    {
+        Vector3 screenPoint = _mainCamera.WorldToScreenPoint(transform.position);
+        
+        if (screenPoint.z < 0) return true;
+        
+        Vector2 viewportPoint = new Vector2(screenPoint.x / Screen.width, screenPoint.y / Screen.height);
+        Vector2 normalizedMargin = new Vector2(_margin.x / Screen.width, _margin.y / Screen.height);
+        
+        return viewportPoint.x < -normalizedMargin.x || 
+            viewportPoint.x > 1 + normalizedMargin.x || 
+            viewportPoint.y < -normalizedMargin.y || 
+            viewportPoint.y > 1 + normalizedMargin.y;
+    }
+
+    private Vector2 CorrectCenterPosition(Vector2 correctedCenter)
     {
         Vector2 minPosition = _canvasRect.rect.min + _buttonsSize * 0.5f + Vector2.one * (_distanceFromCenterWhenShown + _distanceFromScreenBounds);
         Vector2 maxPosition = _canvasRect.rect.max - _buttonsSize * 0.5f - Vector2.one * (_distanceFromCenterWhenShown + _distanceFromScreenBounds);
 
-        float clampedX = Mathf.Clamp(center.x, minPosition.x, maxPosition.x);
-        float clampedY = Mathf.Clamp(center.y, minPosition.y, maxPosition.y);
+        float clampedX = Mathf.Clamp(correctedCenter.x, minPosition.x, maxPosition.x);
+        float clampedY = Mathf.Clamp(correctedCenter.y, minPosition.y, maxPosition.y);
 
         return new Vector2(clampedX, clampedY);
     }
@@ -218,11 +249,11 @@ public class FastActionsPositioner : MonoBehaviour
         _nodeTransform = null;
     }
 
-    /*private void ChangeButtonComponentState(bool state)
+    private void SetButtonsState(bool state)
     {
         _upButton.enabled = state;
         _downButton.enabled = state;
-        _rightButton.enabled = state;
         _leftButton.enabled = state;
-    }*/
+        _rightButton.enabled = state;
+    }
 }
