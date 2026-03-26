@@ -1,12 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class Lightener : MonoBehaviour, IInitializable
+public class Lightener : MonoBehaviour
 {
     [SerializeField] private float _lightFactor = 1.3f;
     [SerializeField] private float _transitionSpeed = 2f;
-
-    public bool IsInitialized { get; private set; }
 
     private float _currentBrightness = 1f;
     private float _targetBrightness = 1f;
@@ -16,14 +14,10 @@ public class Lightener : MonoBehaviour, IInitializable
 
     private Color _defaultColor;
 
-    public void Initialize()
+    public void Awake()
     {
-        if (IsInitialized) return;
-
         _material = GetComponent<Renderer>().material;
         _defaultColor = _material.color;
-
-        IsInitialized = true;
     }
 
     public void UpdateOriginalColor(Color newColor)

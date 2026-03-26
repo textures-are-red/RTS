@@ -143,7 +143,9 @@ public class CameraController : MonoBehaviour
 
     private Vector3 ApplyHeight()
     {
-        _currentHeightChange = Mathf.SmoothDamp(_currentHeightChange, _heightInput, ref _currentHeightVelocity,
+        float targetDeltaHeight = HoverController.IsEnteredObject ? 0f : _heightInput;
+
+        _currentHeightChange = Mathf.SmoothDamp(_currentHeightChange, targetDeltaHeight, ref _currentHeightVelocity,
             _currentHeightDevice is Mouse ? _mouseWheelHeightSmoothTime : _gamepadHeightSmoothTime, _currentHeightDevice is Mouse ? _mouseWheelHeightMaxSpeed : _gamepadHeightMaxSpeed, Time.deltaTime);
 
         return _cameraTransform.forward * _currentHeightChange * (_currentHeightDevice is Mouse ? _mouseHeightSpeed : _gamepadHeightSpeed);

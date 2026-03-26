@@ -122,11 +122,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be1e2e7d90f6154694f14383ddedcff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxLevel: 5
+  _minLevel: 0
+  _level: 1
+  _inventoryCellsCount: 3
+  _avaliableCellsOptions:
+  - Level: 1
+    CellsCount: 1
+  - Level: 3
+    CellsCount: 2
+  - Level: 5
+    CellsCount: 3
   _edgePrefab: {fileID: 8583955301648711664, guid: 0c1db907e34767d40a43c1edfc029e6b, type: 3}
   _levelIndicatorPrefab: {fileID: 6212155977514028768, guid: 8ece8e4275b504748929ed3d01b6c67d, type: 3}
-  _levelIndicatorMargin: {x: 0, y: 0, z: 1.5}
-  _level: 1
-  _multipleUnitsLocatedColor: {r: 1, g: 1, b: 0.20392157, a: 0}
+  _levelIndicatorMargin: {x: 0, y: 0, z: 1.25}
+  _multipleUnitsLocatedColor: {r: 0.8037735, g: 0.8037735, b: 0.16227125, a: 0}
   _neighbors: []
   _onClick:
     m_PersistentCalls:

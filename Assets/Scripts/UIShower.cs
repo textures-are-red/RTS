@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
-public class InventoryShower : MonoBehaviour
+public class UIShower : MonoBehaviour
 {
     [SerializeField] private UnityEvent OnShow;
     [SerializeField] private UnityEvent OnHide;
@@ -14,7 +14,7 @@ public class InventoryShower : MonoBehaviour
 
     [SerializeField] private GameObject _buttonsGameObject;
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private List<Button> _inventoryButtons;
+    [SerializeField] private List<MonoBehaviour> _copmonentsToDisable;
 
     [Space(15)]
 
@@ -87,8 +87,8 @@ public class InventoryShower : MonoBehaviour
 
     private void SetButtonsState(bool state)
     {
-        foreach (var buttons in _inventoryButtons)
-            buttons.enabled = state;
+        foreach (var component in _copmonentsToDisable)
+            component.enabled = state;
     }
 
     private IEnumerator ShowCoroutine()

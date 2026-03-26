@@ -1,5 +1,4 @@
 using System;
-//using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +14,7 @@ public class Edge : MonoBehaviour
     public event Action<Unit> OnTransitionEnd;
     public IReadOnlyList<KeyValuePair<Unit, Coroutine>> UnitTransitions => _unitTransitions; 
 
-    private List<KeyValuePair<Unit, Coroutine>> _unitTransitions = new();
+    private List<KeyValuePair<Unit, Coroutine>> _unitTransitions = new(); //заменить на класс (наверное)
     private List<KeyValuePair<Unit, float>> _transitionTimes = new();
     private List<KeyValuePair<Unit, float>> _thresholds = new();
     private List<KeyValuePair<Unit, Color>> _unitColors = new();
@@ -30,17 +29,17 @@ public class Edge : MonoBehaviour
     private Material _material;
 
     private bool _isInitialized;
-    private bool _subscribed;
+    private bool _nodeSubscribed;
 
     public void LocateBetweenNodes(Node from, Node to)
     {
         From = from;
         To = to;
 
-        if (_subscribed is false && To is not null)
+        if (_nodeSubscribed is false && To is not null)
         {
             To.LevelChanged += OnLevelChanged;
-            _subscribed = true;
+            _nodeSubscribed = true;
         }
 
         Transform toTransform = to.transform;
@@ -195,6 +194,8 @@ public class Edge : MonoBehaviour
         ReleaseUnitData(unit);
         UpdateBuffers();
 
+        unit.EndMoveTo();
+
         OnTransitionEnd?.Invoke(unit);
     }
 
@@ -221,10 +222,10 @@ public class Edge : MonoBehaviour
 
     private void OnEnable()
     {
-        if (To is not null && _subscribed is false)
+        if (To is not null && _nodeSubscribed is false)
         {
             To.LevelChanged += OnLevelChanged;
-            _subscribed = true;
+            _nodeSubscribed = true;
         }
 
         if (_isInitialized) return;
@@ -237,10 +238,10 @@ public class Edge : MonoBehaviour
 
     private void OnDisable()
     {
-        if (To is not null && _subscribed)
+        if (To is not null && _nodeSubscribed)
         {
             To.LevelChanged -= OnLevelChanged;
-            _subscribed = false;
+            _nodeSubscribed = false;
         }
     }
 

@@ -34,7 +34,11 @@ public class MouseMoveEnable : MonoBehaviour
 
     public void ClearClickedNode() => ClickedNode = null;
 
-    private void OnMouseEnablePerformed(InputAction.CallbackContext ctx) => _mouseMoveEnableCoroutine ??= StartCoroutine(WaitForEnable());
+    private void OnMouseEnablePerformed(InputAction.CallbackContext ctx)
+    {
+        if (HoverController.IsEnteredObject is false)
+            _mouseMoveEnableCoroutine ??= StartCoroutine(WaitForEnable());
+    }
 
     private IEnumerator WaitForEnable()
     {
@@ -51,8 +55,8 @@ public class MouseMoveEnable : MonoBehaviour
 
     private void OnMouseEnableCanceled(InputAction.CallbackContext ctx)
     {
-        if (CanMouseMove is false)
-            StartCoroutine(ActivateInteractables());
+        if (CanMouseMove is false && HoverController.IsEnteredObject is false)
+            ActivateInteractables();
 
         CanMouseMove = false;
         _elapsedFromMoveEnableStarted = 0f;
@@ -66,11 +70,9 @@ public class MouseMoveEnable : MonoBehaviour
         Disable?.Invoke();
     }
 
-    private IEnumerator ActivateInteractables()
+    private void ActivateInteractables()
     {
-        yield return new WaitForEndOfFrame();
-
-        if (EventSystem.current.IsPointerOverGameObject()) yield break;
+        //if (EventSystem.current.IsPointerOverGameObject()) yield break;
 
         Ray ray = _mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
             

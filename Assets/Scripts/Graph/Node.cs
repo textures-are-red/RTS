@@ -4,13 +4,22 @@ using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
 
-public class Node : MonoBehaviour, IInitializable, IClickable
+public class Node : MonoBehaviour, IInitializable, IClickable, IInventoryHolder
 {
     private const sbyte _levelIndicatorsCount = 4;
     private const float _levelIndicatorsRotation = 90f;
 
     [SerializeField] private sbyte _maxLevel = 5;
     [SerializeField] private sbyte _minLevel = 0;
+    [SerializeField] private sbyte _level = 1;
+
+    [Space(15)]
+
+    [SerializeField] private byte _inventoryCellsCount = 3;
+    [SerializeField] private List<Item> _startItems;
+    [SerializeField] private List<LevelToCells> _avaliableCellsOptions;
+
+    [Space(15)]
 
     [SerializeField] private Edge _edgePrefab;
     [SerializeField] private TextMeshPro _levelIndicatorPrefab;
@@ -18,7 +27,6 @@ public class Node : MonoBehaviour, IInitializable, IClickable
 
     [Space(15)]
 
-    [SerializeField] private sbyte _level = 1;
     [SerializeField] private Color _multipleUnitsLocatedColor;
     [SerializeField] private List<Node> _neighbors;
 
@@ -26,6 +34,8 @@ public class Node : MonoBehaviour, IInitializable, IClickable
 
     public bool IsInitialized { get; private set; }
     public bool HasUnits => _locatedUnits.Count is not 0;
+
+    public Inventory Inventory { get; private set;}
 
     public event Action LevelChanged;
     public sbyte Level => _level;
@@ -52,14 +62,24 @@ public class Node : MonoBehaviour, IInitializable, IClickable
 
         _material = GetComponent<Renderer>().material;
         _lightener = GetComponent<Lightener>();
-        _lightener.Initialize();
 
         _defaultColor = _material.color;
+
+        Inventory = new(_inventoryCellsCount, LevelToCells.CalculateInventoryAvaliableCells(_level, _avaliableCellsOptions));
+        LevelChanged += OnLevelChanged;
+
+        if (_startItems?.Count is not 0)
+            foreach(var item in _startItems)
+            {
+                Item itemtoAdd = ItemsFactory.GetItemByID(item.Id) as Item;
+
+                if (Inventory.TryAdd(itemtoAdd, addAnyway: true) is false)
+                    Debug.LogError("cant add item to inventory");
+            }
 
         //Graph.AddNode(this);
 
         SpawnEdges();
-
         SpawnLevelIndicator();
 
         IsInitialized = true;
@@ -146,7 +166,6 @@ public class Node : MonoBehaviour, IInitializable, IClickable
 
             newEdge.OnTransitionEnd += UnlocateUnit;
             newEdge.OnTransitionEnd += neighbor.LocateUnit;
-            newEdge.OnTransitionEnd += unit => unit.EndMoveTo();
         }
     }
 
@@ -177,14 +196,34 @@ public class Node : MonoBehaviour, IInitializable, IClickable
         }
     }
 
+    private void OnLevelChanged()
+    {
+        Inventory.UpdateAvailable(LevelToCells.CalculateInventoryAvaliableCells(_level, _avaliableCellsOptions));
+    }
+
     private void OnDestroy()
     {
-        for (sbyte i = 0; i < _levelIndicatorsCount - 1; ++i)
+        foreach (var indicator in _levelIndicators)
         {
-            var indicator = _levelIndicators[i];
-            Destroy(indicator.gameObject);
+            if (indicator is not null)
+                Destroy(indicator.gameObject);
         }
 
         _levelIndicators.Clear();
+
+        foreach (var edge in _edges)
+        {
+            if (edge is not null)
+            {
+                edge.OnTransitionEnd -= UnlocateUnit;
+
+                if (edge.To is not null)
+                    edge.OnTransitionEnd -= edge.To.LocateUnit;
+            }
+        }
+
+        LevelChanged -= OnLevelChanged;
+
+        Inventory = null;
     }
 }
