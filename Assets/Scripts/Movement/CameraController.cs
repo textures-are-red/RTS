@@ -7,7 +7,6 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _flatForward;
     [SerializeField] private CameraMovementSettings _settings;
-    [SerializeField] private LayerMask _fieldMask;
 
     [Space(15)]
 
@@ -20,17 +19,33 @@ public class CameraController : MonoBehaviour
     private CameraMover _mover;
     private CameraNodeSelectionHandler _nodeSelector;
 
+    private Transform _cameraTransform;
+
     private void Awake()
     {
-        _mover = new(_inputHandler, _settings, _flatForward, _fieldMask);
+        _mover = new(_inputHandler, _settings, _flatForward);
         _nodeSelector = new(_inputHandler);
         _gamepadNavigator.Initialize(_nodeSelector);
+
+        _cameraTransform = Camera.main.transform;
     }
 
     private void Update()
     {
-        Vector3 movement = _gamepadNavigator.GetMovementVector();
-        _mover.ApplyMovement(movement);
+        Move();
+    }
+
+    private void Move()
+    {
+        Vector3 gamepadCenterMovement = _gamepadNavigator.GetMovementVector();
+
+        Vector3 defaultMovement = _mover.GetDefaultInput();
+        _mover.MoveTheMouseReferencePoint(defaultMovement);       
+        Vector3 mouseMovement = _mover.GetMouseInputDelta();
+
+        Vector3 heightMovement = _mover.ApplyHeight();
+
+        _cameraTransform.position += _flatForward.TransformDirection(defaultMovement + mouseMovement) + gamepadCenterMovement + heightMovement;
     }
 
     private void OnEnable()
