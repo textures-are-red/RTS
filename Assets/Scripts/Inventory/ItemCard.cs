@@ -3,152 +3,76 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
-public class ItemCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
-    [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private ItemDisplay _display;
 
-    [Space(15)]
+    [Space (15)]
 
-    [SerializeField] private Image _itemBackground;
-    
-    [Space(15)]
+    [SerializeField, Range(0f, 1f)] private float _transparentFactor = 0.6f;
 
-    [SerializeField] private Image _itemImage;
-    [SerializeField] private TextMeshProUGUI _stackCount;
+    public RectTransform RectTransform => _display.RectTransform;
 
-    [Space(15)]
-
-    [SerializeField] private Image _infoBackground;
-    [SerializeField] private TextMeshProUGUI _name;
-    [SerializeField] private TextMeshProUGUI _description;
-
-    public Canvas Canvas { private get; set; }
-    public bool IsPreview { get; private set; }
-
-    public SlotCard SlotCard
-    {
-        get => _slotCard;
-        set
-        {
-            _slotCard = value;
-            if (_slotCard is not null)
-                _slotCardRectTransform = _slotCard.transform as RectTransform;
-        }
-    }
+    public SlotCard SlotCard { get; private set; }
 
     public Item Item
     {
-        get => _item;
-        set
-        {
-            _item = value;
-            UpdateInfo();
-        }
+        get => _display.Item;
+        set => _display.Item = value;
     }
 
-    public Image ItemBackground => _itemBackground;
-    
-    public Image ItemImage => _itemImage;
-    public TextMeshProUGUI StackCount => _stackCount;
+    private Canvas _canvas;
 
-    public Image InfoBackground => _infoBackground;
-    public TextMeshProUGUI Name => _name;
-    public TextMeshProUGUI Description => _description;
-
-    public ItemDragPreviewService ItemDragPreviewService { private get; set; }
-    public RectTransform RectTransform { get; private set; }
-
-    private SlotCard _slotCard;
-    private Item _item;
-
-    private RectTransform _slotCardRectTransform;
-
-    public void SetAsPreview()
+    public void Initialize(SlotCard slotCard)
     {
-        IsPreview = true;
-        _slotCard = null;
-        _slotCardRectTransform = null;
-
-        if (_canvasGroup is not null)
-        {
-            _canvasGroup.blocksRaycasts = false;
-            _canvasGroup.interactable = false;
-        }
+        SlotCard = slotCard;
     }
 
-    public void ResetAfterDrag()
+    public void SetAsPreview(Canvas canvas)
     {
-        if (IsPreview) return;
-
-        if (_canvasGroup is not null)
-        {
-            _canvasGroup.alpha = 1f;
-            _canvasGroup.blocksRaycasts = true;
-        }
-
-        ItemDragPreviewService?.HidePreview();
+        _display.SetAsPreview();
+        _canvas = canvas;
     }
 
-    public void UpdateInfo()
+    public void BecomeTransparent()
     {
-        if (_item is not null)
-        {
-            _itemBackground.enabled = true;
-            _itemImage.enabled = true;
-            _itemImage.sprite = Item.Icon;
+        if (_display.CanvasGroup is null) return;
+        
+        _display.CanvasGroup.alpha = _transparentFactor;
+        _display.CanvasGroup.blocksRaycasts = false;
+    }
 
-            _name.text = Item.Name;
-            _description.text = Item.Description;
-            _infoBackground.enabled = true;
+    public void BecomeOpaque()
+    {
+        if (_display.CanvasGroup is null) return;
+        
+        _display.CanvasGroup.alpha = 1f;
+        _display.CanvasGroup.blocksRaycasts = true;
+    }
 
-            if (_item is IStackable stackable)
-            {
-                _stackCount.text = stackable.CurrentCount.ToString();
-            }
-            else
-            {
-                _stackCount.text = string.Empty;
-            }
-        }
-        else
-        {
-            _itemBackground.enabled = false;
-            _itemImage.enabled = false;
-            _itemImage.sprite = null;
+    public void UpdateInfo() => _display.UpdateInfo();
 
-            _name.text = string.Empty;
-            _description.text = string.Empty;
-            _infoBackground.enabled = false;
-
-            _stackCount.text = string.Empty;
-        }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (IsPreview) return;
+        BecomeTransparent();
 
-        _canvasGroup.alpha = 0.6f;
-        _canvasGroup.blocksRaycasts = false;
-
-        ItemDragPreviewService.ShowPreview(this);
+        if (ItemDragPreviewService.Instance?.IsShown is false)
+            ItemDragPreviewService.Instance?.ShowPreview(_display);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (IsPreview) return;
-        ItemDragPreviewService?.UpdatePosition(eventData.delta / (Canvas is null ? 1f : Canvas.scaleFactor));
+        ItemDragPreviewService.Instance?.UpdatePosition(eventData.delta / (_canvas is null ? 1f : _canvas.scaleFactor));
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (IsPreview) return;
-
-        ResetAfterDrag();
-    }
-
-    private void Awake()
-    {
-        RectTransform = transform as RectTransform;
+        BecomeOpaque();
+        ItemDragPreviewService.Instance?.HidePreview();
     }
 }

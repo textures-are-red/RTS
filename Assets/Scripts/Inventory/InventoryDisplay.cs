@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class InventoryDisplay : MonoBehaviour, IInventoryHolder
 {
-    [SerializeField] private Canvas _canvas;
     [SerializeField] private SlotCard _slotCardPrefab;
 
     public Inventory Inventory
@@ -68,7 +67,6 @@ public class InventoryDisplay : MonoBehaviour, IInventoryHolder
     private SlotCard SpawnSlotCard()
     {
         SlotCard newSlotCard = Instantiate(_slotCardPrefab, transform);
-        newSlotCard.Canvas = _canvas;
         _slotCards.Add(newSlotCard);
 
         return newSlotCard;

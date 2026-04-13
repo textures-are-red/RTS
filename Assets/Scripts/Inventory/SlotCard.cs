@@ -7,16 +7,6 @@ public class SlotCard : MonoBehaviour, IDropHandler
     [SerializeField] private ItemCard _itemCardPrefab;
     [SerializeField] private Image _unavailableMark;
 
-    public Canvas Canvas
-    {
-        private get => _canvas;
-        set
-        {
-            _canvas = value;
-            if (_canvas is not null) _itemCard.Canvas = _canvas;
-        }
-    }
-
     public Slot Slot 
     {
         get => _slot;
@@ -37,7 +27,6 @@ public class SlotCard : MonoBehaviour, IDropHandler
 
     public RectTransform RectTransform { get; private set; }
 
-    private Canvas _canvas;
     private Slot _slot;
     private ItemCard _itemCard;
 
@@ -45,7 +34,8 @@ public class SlotCard : MonoBehaviour, IDropHandler
     {
         if (eventData.pointerDrag is not null && eventData.pointerDrag.TryGetComponent<ItemCard>(out ItemCard droppedItemCard))
         {
-            droppedItemCard.ResetAfterDrag();
+            droppedItemCard.BecomeOpaque();
+            ItemDragPreviewService.Instance?.HidePreview();
 
             SlotCard sourceSlotCard = droppedItemCard.SlotCard;
             if (sourceSlotCard == this || sourceSlotCard is null) return;
@@ -57,8 +47,6 @@ public class SlotCard : MonoBehaviour, IDropHandler
 
     public void UpdateInfo()
     {
-        _itemCard ??= CreateItemCard();
-
         if (_slot is null)
         {
             HideItem();
@@ -81,9 +69,7 @@ public class SlotCard : MonoBehaviour, IDropHandler
     private ItemCard CreateItemCard()
     {
         ItemCard newItemCard = Instantiate(_itemCardPrefab, RectTransform);
-        newItemCard.Canvas = Canvas;
-        newItemCard.SlotCard = this;
-        newItemCard.ItemDragPreviewService = ItemDragPreviewService.Instance;
+        newItemCard.Initialize(this);
 
         (_unavailableMark.transform as RectTransform).SetAsLastSibling();
 
@@ -104,7 +90,6 @@ public class SlotCard : MonoBehaviour, IDropHandler
     {
         RectTransform = transform as RectTransform;
         _itemCard = CreateItemCard();
-        _itemCard.Canvas = _canvas;
         _itemCard.UpdateInfo();
     }
 

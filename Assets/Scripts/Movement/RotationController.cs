@@ -46,7 +46,6 @@ public class RotationController : MonoBehaviour
     public void Awake()
     {
         _mouseRotationEnabler = GetComponent<MouseRotationEnabler>();
-        //_mouseRotationEnabler.Initialize();
 
         _cameraMain = Camera.main;
         _cameraTransform = _cameraMain.transform;

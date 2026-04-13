@@ -13,6 +13,11 @@ GameObject:
   - component: {fileID: 6351449526930947081}
   - component: {fileID: 609414920344137661}
   - component: {fileID: 6393189079759699570}
+  - component: {fileID: 5229396078013122927}
+  - component: {fileID: 8206187725718038455}
+  - component: {fileID: -3955006123066143024}
+  - component: {fileID: 7133595162760338746}
+  - component: {fileID: -4565644102198386450}
   - component: {fileID: 5815110267708466390}
   m_Layer: 0
   m_Name: Node
@@ -122,22 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3be1e2e7d90f6154694f14383ddedcff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLevel: 5
-  _minLevel: 0
-  _level: 1
-  _inventoryCellsCount: 3
-  _avaliableCellsOptions:
-  - Level: 1
-    CellsCount: 1
-  - Level: 3
-    CellsCount: 2
-  - Level: 5
-    CellsCount: 3
-  _edgePrefab: {fileID: 8583955301648711664, guid: 0c1db907e34767d40a43c1edfc029e6b, type: 3}
-  _levelIndicatorPrefab: {fileID: 6212155977514028768, guid: 8ece8e4275b504748929ed3d01b6c67d, type: 3}
-  _levelIndicatorMargin: {x: 0, y: 0, z: 1.25}
-  _multipleUnitsLocatedColor: {r: 0.8037735, g: 0.8037735, b: 0.16227125, a: 0}
-  _neighbors: []
+  _nodeLevel: {fileID: 8206187725718038455}
+  _nodeInventory: {fileID: -3955006123066143024}
+  _nodeConnections: {fileID: 7133595162760338746}
+  _nodeAppearance: {fileID: -4565644102198386450}
   _onClick:
     m_PersistentCalls:
       m_Calls:
@@ -153,6 +146,88 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5229396078013122927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694826625022269450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450ff9b68ff3dc44d867273822946fb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &8206187725718038455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694826625022269450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 849b7d5d0c5db7642b00bc8bc15da857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxLevel: 5
+  _minLevel: 0
+  _level: 1
+  _levelIndicatorPrefab: {fileID: 6212155977514028768, guid: 8ece8e4275b504748929ed3d01b6c67d, type: 3}
+  _levelIndicatorMargin: {x: 0, y: 0, z: 1.25}
+--- !u!114 &-3955006123066143024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694826625022269450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a491a3569d78ccf4ebf92d9656b3ea4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nodeLevel: {fileID: 8206187725718038455}
+  _inventoryCellsCount: 3
+  _startItems: []
+  _avaliableCellsOptions:
+  - Level: 1
+    CellsCount: 1
+  - Level: 3
+    CellsCount: 2
+  - Level: 5
+    CellsCount: 3
+--- !u!114 &7133595162760338746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694826625022269450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 120d4f8698d691d468b0dc4a48a49c12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _edgePrefab: {fileID: 8583955301648711664, guid: 0c1db907e34767d40a43c1edfc029e6b, type: 3}
+  _thisNode: {fileID: 6393189079759699570}
+  _neighbors: []
+--- !u!114 &-4565644102198386450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2694826625022269450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdb1ef2839da85947b759e3eae4d2370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _multipleUnitsLocatedColor: {r: 0.8039216, g: 0.8039216, b: 0.16078432, a: 0}
 --- !u!114 &5815110267708466390
 MonoBehaviour:
   m_ObjectHideFlags: 0

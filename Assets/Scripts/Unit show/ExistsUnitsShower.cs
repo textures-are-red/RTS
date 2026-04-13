@@ -75,7 +75,7 @@ public class ExistsUnitsShower : MonoBehaviour
     {
         StartCoroutine(SubscribeWhenNotNull());
 
-        _unitController.LevelChanged += UpdateCardAt;
+        _unitController.Selector.LevelChanged += UpdateCardAt;
     }
 
     private IEnumerator SubscribeWhenNotNull()
@@ -91,6 +91,6 @@ public class ExistsUnitsShower : MonoBehaviour
         UpdateUI();
         ((INotifyCollectionChanged)_unitController.ExistsUnits).CollectionChanged -= OnUnitsChange;
 
-        _unitController.LevelChanged -= UpdateCardAt;
+        _unitController.Selector.LevelChanged -= UpdateCardAt;
     }
 }

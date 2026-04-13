@@ -11,8 +11,8 @@ public static class ItemsFactory
             Debug.Log($"element added: id: {item.Id}");
     }
 
-    public static Item GetItemByID(string id)
+    public static Item CreateItemByID(string id)
     {
-        return _itemsDictionary[id].Clone() as Item;
+        return _itemsDictionary[id].CreateItemBasedOnThisTemplate();
     }
 }

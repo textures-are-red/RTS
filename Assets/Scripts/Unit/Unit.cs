@@ -28,7 +28,7 @@ public class Unit : IInventoryHolder, IDisposable
         Level = level;
         UnitColor = color;
         CurrentNode = startNode;
-        CurrentNode.LocateUnit(this);
+        CurrentNode.NodeUnits.LocateUnit(this);
 
         _avaliableCellsOptions = avaliableCellsOptions;
         Inventory = new(cellsCount, LevelToCells.CalculateInventoryAvaliableCells(Level, _avaliableCellsOptions));
@@ -36,10 +36,10 @@ public class Unit : IInventoryHolder, IDisposable
 
     public void StartMoveTo(Node nodeToMove)
     {
-        Edge _edgeToNode = CurrentNode?.EdgeLeadsToNode(nodeToMove);
+        Edge _edgeToNode = CurrentNode?.NodeConnections.EdgeLeadsToNode(nodeToMove);
         if (_edgeToNode is null) return;
 
-        CurrentNode?.UnlocateUnit(this);
+        CurrentNode?.NodeUnits.UnlocateUnit(this);
 
         LeftNode?.Invoke();
 
@@ -80,7 +80,7 @@ public class Unit : IInventoryHolder, IDisposable
     public void Dispose()
     {
         CurrentEdge?.StopUnitTransition(this);
-        CurrentNode?.UnlocateUnit(this);
+        CurrentNode?.NodeUnits.UnlocateUnit(this);
         CurrentNode = null;
         CurrentEdge = null;
 
@@ -89,12 +89,4 @@ public class Unit : IInventoryHolder, IDisposable
         Inventory = null;
         _avaliableCellsOptions = null;
     }
-
-    /*private void OverrideAvailables()
-    {
-        byte availableCellsCount = LevelToCells.CalculateInventoryAvaliableCells(Level, _avaliableCellsOptions);
-
-        if (availableCellsCount != Inventory.AvailableCellsCount)
-            Inventory.OverrideAvailables(availableCellsCount);
-    }*/
 }

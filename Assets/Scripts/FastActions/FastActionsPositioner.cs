@@ -33,6 +33,11 @@ public class FastActionsPositioner : MonoBehaviour
     private RectTransform _rightButtonTransform;
     private RectTransform _leftButtonTransform;
 
+    private HoverDetector _upButtonHoverDetector;
+    private HoverDetector _downButtonHoverDetector;
+    private HoverDetector _rightButtonHoverDetector;
+    private HoverDetector _leftButtonHoverDetector;
+
     public bool ButtonsAreShown { get; private set; }
     public Transform CurrentNodeTransform => _nodeTransform;
 
@@ -52,6 +57,11 @@ public class FastActionsPositioner : MonoBehaviour
         _downButtonTransform = _downButton.transform as RectTransform;
         _rightButtonTransform = _rightButton.transform as RectTransform;
         _leftButtonTransform = _leftButton.transform as RectTransform;
+
+        _upButtonHoverDetector = _upButton.gameObject.GetComponent<HoverDetector>();
+        _downButtonHoverDetector = _downButton.gameObject.GetComponent<HoverDetector>();
+        _rightButtonHoverDetector = _rightButton.gameObject.GetComponent<HoverDetector>();
+        _leftButtonHoverDetector = _leftButton.gameObject.GetComponent<HoverDetector>();
 
         ForceHide();
     }
@@ -248,12 +258,17 @@ public class FastActionsPositioner : MonoBehaviour
 
         _nodeTransform = null;
     }
-
+    
     private void SetButtonsState(bool state)
     {
-        _upButton.enabled = state;
-        _downButton.enabled = state;
-        _leftButton.enabled = state;
-        _rightButton.enabled = state;
+        _upButton.interactable = state;
+        _downButton.interactable = state;
+        _leftButton.interactable = state;
+        _rightButton.interactable = state;
+
+        _upButtonHoverDetector.enabled = state;
+        _downButtonHoverDetector.enabled = state;
+        _rightButtonHoverDetector.enabled = state;
+        _leftButtonHoverDetector.enabled = state;
     }
 }

@@ -31,7 +31,12 @@ public class Graph : MonoBehaviour
             if (_nodes.Contains(node) is false)
                 _nodes.Add(node);
             
-            node.Initialize();
+            node.InitializeUnitsComponent();
+        }
+
+        foreach (var node in nodesInScene)
+        {
+            node.InitializeConnections();
         }
     }
 

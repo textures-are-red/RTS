@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83dc4841073b9a458ed47a13ad52e20, type: 3}
+  m_Name: CameraMovementSettings
+  m_EditorClassIdentifier: 
+  _referenceMouseHeight: 25
+  _clampReferenceMouseHeight: {x: 0.7, y: 4}
+  _referenceDefaultHeight: 27
+  _clampReferenceDefaultHeight: {x: 1, y: 3}
+  _referenceNodeSearchRadius: 15
+  _clampReferenceNodeSearchRadius: {x: 0, y: 10}
+  _mouseSpeed: 5
+  _mouseSmoothTime: 0.25
+  _mouseMaxSpeed: 60
+  _mouseHeightSpeed: 2
+  _mouseWheelHeightSmoothTime: 0.15
+  _mouseWheelHeightMaxSpeed: 50
+  _keyboardSpeed: 15
+  _keyboardSmoothTime: 0.25
+  _keyboardMaxSpeed: 25
+  _gamepadSpeed: 4
+  _gamepadSmoothTime: 0.2
+  _gamepadMaxSpeed: 50
+  _gamepadHeightSpeed: 0.4
+  _gamepadHeightSmoothTime: 0.1
+  _gamepadHeightMaxSpeed: 15
