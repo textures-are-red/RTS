@@ -26,9 +26,24 @@ public class SlotCard : MonoBehaviour, IDropHandler
     }
 
     public RectTransform RectTransform { get; private set; }
+    public Inventory Inventory { get; private set; }
 
     private Slot _slot;
     private ItemCard _itemCard;
+
+    private void Awake()
+    {
+        RectTransform = transform as RectTransform;
+        _itemCard = CreateItemCard();
+        _itemCard.UpdateInfo();
+    }
+
+    public void Initialize(Inventory inventory)
+    {
+        Inventory = inventory;
+
+        _itemCard?.Initialize(this, Inventory);
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -69,7 +84,7 @@ public class SlotCard : MonoBehaviour, IDropHandler
     private ItemCard CreateItemCard()
     {
         ItemCard newItemCard = Instantiate(_itemCardPrefab, RectTransform);
-        newItemCard.Initialize(this);
+        newItemCard.Initialize(this, Inventory);
 
         (_unavailableMark.transform as RectTransform).SetAsLastSibling();
 
@@ -84,13 +99,6 @@ public class SlotCard : MonoBehaviour, IDropHandler
     private void HideItem()
     {
         _itemCard?.gameObject.SetActive(false);
-    }
-
-    private void Awake()
-    {
-        RectTransform = transform as RectTransform;
-        _itemCard = CreateItemCard();
-        _itemCard.UpdateInfo();
     }
 
     private void OnSlotChanged(Slot slot)

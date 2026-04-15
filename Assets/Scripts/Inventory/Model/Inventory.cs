@@ -36,6 +36,20 @@ public class Inventory
         return true;
     }
 
+    public bool TryStack(IStackable sourceStackable, Slot sourceSlot)
+    {
+        foreach (var slot in _slots)
+        {
+            if (ItemStacker.TryMerge(sourceSlot, slot))
+            {
+                if (sourceStackable is null)
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
     public void Remove(Item item, bool removeAnyway = false)
     {
         Slot slotWithItem = _slots.Find(s => s.Item == item);
@@ -52,6 +66,12 @@ public class Inventory
         if (slotExists is false || (slot.Available || slot.Available is false && removeAnyway) is false) return;
 
         slot.Item = null;
+    }
+
+    public bool HasItem(Item item)
+    {
+        if (item is null) return false;
+        return _slots.Exists(slot => slot.Item == item);
     }
 
     public void UpdateAvailable(int newAvailableCount)

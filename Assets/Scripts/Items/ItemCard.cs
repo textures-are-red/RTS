@@ -14,6 +14,7 @@ public class ItemCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public RectTransform RectTransform => _display.RectTransform;
 
     public SlotCard SlotCard { get; private set; }
+    public Inventory Inventory { get; private set; }
 
     public Item Item
     {
@@ -23,9 +24,10 @@ public class ItemCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     private Canvas _canvas;
 
-    public void Initialize(SlotCard slotCard)
+    public void Initialize(SlotCard slotCard, Inventory inventory)
     {
         SlotCard = slotCard;
+        Inventory = inventory;
     }
 
     public void SetAsPreview(Canvas canvas)
@@ -54,7 +56,8 @@ public class ItemCard : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        
+        if (_display?.Item is not null && Inventory is not null)
+            InventoryDisplaysHolder.Instance.TransferItemBetweenDisplays(_display.Item, Inventory);
     }
 
     public void OnBeginDrag(PointerEventData eventData)

@@ -68,6 +68,7 @@ public class InventoryDisplay : MonoBehaviour, IInventoryHolder
     {
         SlotCard newSlotCard = Instantiate(_slotCardPrefab, transform);
         _slotCards.Add(newSlotCard);
+        newSlotCard.Initialize(_inventory);
 
         return newSlotCard;
     }

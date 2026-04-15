@@ -1192,7 +1192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32d9cc51a8110048a57f8b20d309b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 1203642529}
   _slotCardPrefab: {fileID: 2624023798543457736, guid: a94733af4a8fcfe478823a2a72c14f8c, type: 3}
 --- !u!1 &783542482
 GameObject:
@@ -1557,6 +1556,7 @@ GameObject:
   - component: {fileID: 1203642529}
   - component: {fileID: 1203642528}
   - component: {fileID: 1203642527}
+  - component: {fileID: 1203642532}
   - component: {fileID: 1203642531}
   m_Layer: 5
   m_Name: Inventory
@@ -1663,6 +1663,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemCardDragPreviewPrefab: {fileID: 8892536773253657961, guid: b03df26e92b37be4f935fd2d174ce5e6, type: 3}
   _canvas: {fileID: 1203642529}
+--- !u!114 &1203642532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203642526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf930a4dab8e5e74eba49cd048783990, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unitInventoryDisplay: {fileID: 488206196}
+  _nodeInventoryDisplay: {fileID: 1543550573}
 --- !u!1 &1270769669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2880,7 +2894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e32d9cc51a8110048a57f8b20d309b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 1203642529}
   _slotCardPrefab: {fileID: 2624023798543457736, guid: a94733af4a8fcfe478823a2a72c14f8c, type: 3}
 --- !u!4 &1566165118 stripped
 Transform:

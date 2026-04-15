@@ -4,8 +4,15 @@ public static class ItemStacker
 {
     public static bool TryMerge(Slot sourceSlot, Slot destinationSlot)
     {
-        if (sourceSlot?.Item is null || destinationSlot?.Item is null)
+        if (sourceSlot is null || destinationSlot is null || sourceSlot.Item is null || sourceSlot.Available is false || destinationSlot.Available is false)
             return false;
+        
+        if (destinationSlot.Item is null)
+        {
+            destinationSlot.Item = sourceSlot.Item;
+            sourceSlot.Item = null;
+            return true;
+        }
 
         Item sourceItem = sourceSlot.Item;
         Item destItem = destinationSlot.Item;
